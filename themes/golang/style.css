@@ -91,6 +91,11 @@ span.packageTotal {
     background-color: #e0ebf5;
 }
 
+.listing-wrap {
+    width: 100%;
+    overflow-x: scroll;
+}
+
 table.listing {
     margin-left: 10px;
 }
@@ -127,7 +132,8 @@ table.listing tr:last-child td:first-child {
     margin-left: 10px;
 }
 
-.info code {}
+.info code {
+}
 
 pre {
     margin: 1px;
@@ -140,6 +146,11 @@ pre.cmd {
     margin: 20px;
     line-height: 18px;
     font-size: 14px;
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap; /* Opera <7 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer */
 }
 
 a {

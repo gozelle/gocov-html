@@ -1,17 +1,17 @@
 # Gocov HTML export
 
-This is a simple helper tool for generating HTML output from [axw/gocov](https://github.com/axw/gocov/).
+This is a simple helper tool for generating HTML output from [axw/gocov](https://github.com/gozelle/gocov/).
 
 `gocov-html` has support for themes, you might want to have a [look at the screenshots](themes/README.md).
 
 ## Installation
 
-Binaries for most amd64 systems are built for every release. Please just [grab a binary version of the latest release](https://github.com/matm/gocov-html/releases).
+Binaries for most amd64 systems are built for every release. Please just [grab a binary version of the latest release](https://github.com/gozelle/gocov-html/releases).
 
 You can also build it from source. In this case, a working Go 1.11+ compiler is required:
 
 ```bash
-$ go install github.com/matm/gocov-html/cmd/gocov-html@latest
+$ go install github.com/gozelle/gocov-html/cmd/gocov-html@latest
 ```
 
 A [Dockerfile](Dockerfile) is also provided.

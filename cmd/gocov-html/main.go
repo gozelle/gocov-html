@@ -27,15 +27,15 @@ import (
 	"log"
 	"os"
 	"runtime"
-
-	"github.com/matm/gocov-html/pkg/config"
-	"github.com/matm/gocov-html/pkg/themes"
+	
+	"github.com/gozelle/gocov-html/pkg/config"
+	"github.com/gozelle/gocov-html/pkg/themes"
 )
 
 func main() {
 	var r io.Reader
 	log.SetFlags(0)
-
+	
 	css := flag.String("s", "", "path to custom CSS file")
 	showVersion := flag.Bool("v", false, "show program version")
 	showDefaultCSS := flag.Bool("d", false, "output CSS of default theme")
@@ -44,9 +44,9 @@ func main() {
 	reverseOrder := flag.Bool("r", false, "put lower coverage functions on top")
 	maxCoverage := flag.Uint64("cmax", 100, "only show functions whose coverage is greater than cmax")
 	minCoverage := flag.Uint64("cmin", 0, "only show functions whose coverage is smaller than cmin")
-
+	
 	flag.Parse()
-
+	
 	if *showVersion {
 		fmt.Printf("Version:      %s\n", config.Version)
 		fmt.Printf("Git revision: %s\n", config.GitRev)
@@ -56,31 +56,31 @@ func main() {
 		fmt.Printf("OS/Arch:      %s/%s\n", runtime.GOOS, runtime.GOARCH)
 		return
 	}
-
+	
 	if *listThemes {
 		for _, th := range themes.List() {
 			fmt.Printf("%-10s -- %s\n", th.Name(), th.Description())
 		}
 		return
 	}
-
+	
 	if *minCoverage > *maxCoverage {
 		log.Fatal("error: empty report if cmin > cmax, please use a smaller cmin value.")
 	}
 	if *maxCoverage > 100 {
 		*maxCoverage = 100
 	}
-
+	
 	err := themes.Use(*theme)
 	if err != nil {
 		log.Fatalf("theme selection: %v", err)
 	}
-
+	
 	if *showDefaultCSS {
 		fmt.Println(themes.Current().Data().Style)
 		return
 	}
-
+	
 	switch flag.NArg() {
 	case 0:
 		r = os.Stdin
@@ -92,7 +92,7 @@ func main() {
 	default:
 		log.Fatalf("Usage: %s data.json\n", os.Args[0])
 	}
-
+	
 	opts := themes.ReportOptions{
 		LowCoverageOnTop: *reverseOrder,
 		Stylesheet:       *css,

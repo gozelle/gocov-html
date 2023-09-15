@@ -2,10 +2,10 @@
 
 
 BIN=gocov-html
-MAIN_CMD=github.com/matm/${BIN}/cmd/${BIN}
+MAIN_CMD=github.com/gozelle/${BIN}/cmd/${BIN}
 
 GENERATOR_BIN=generator
-GENERATOR_CMD=github.com/matm/${BIN}/cmd/${GENERATOR_BIN}
+GENERATOR_CMD=github.com/gozelle/${BIN}/cmd/${GENERATOR_BIN}
 
 include version.mk
 include build.mk

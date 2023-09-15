@@ -66,16 +66,18 @@
             <a href="#s_fn_{{$f.Name}}">Back</a>
             <p>In <code>{{$f.File}}</code>:</p>
         </div>
-        <table class="listing">
-            {{range $p,$info := $f.Lines}}
-            <tr{{if $info.Missed}} class="miss"{{end}}>
-                <td>{{$info.LineNumber}}</td>
-                <td>
-                    <code><pre>{{$info.Code}}</pre></code>
-                </td>
-            </tr>
-            {{end}}
-        </table>
+        <div class="listing-wrap">
+            <table class="listing">
+                {{range $p,$info := $f.Lines}}
+                <tr{{if $info.Missed}} class="miss"{{end}}>
+                    <td>{{$info.LineNumber}}</td>
+                    <td>
+                        <code><pre>{{$info.Code}}</pre></code>
+                    </td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
         {{end}} {{/* range function lines */}}
 
         <!--    Can be parsed by external script

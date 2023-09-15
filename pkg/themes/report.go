@@ -13,8 +13,8 @@ import (
 	"sort"
 	"strings"
 	"time"
-
-	"github.com/axw/gocov"
+	
+	"github.com/gozelle/gocov"
 	"github.com/rotisserie/eris"
 )
 
@@ -109,7 +109,7 @@ func buildReportPackage(pkg *gocov.Package, r *report) reportPackage {
 // printReport prints a coverage report to the given writer.
 func printReport(w io.Writer, r *report) error {
 	data := curTheme.Data()
-
+	
 	// Base64 decoding of style data and script.
 	s, err := base64.StdEncoding.DecodeString(data.Style)
 	if err != nil {
@@ -121,7 +121,7 @@ func printReport(w io.Writer, r *report) error {
 	if err != nil {
 		return eris.Wrap(err, "decode script")
 	}
-
+	
 	if len(r.Stylesheet) > 0 {
 		// Inline CSS.
 		f, err := os.Open(r.Stylesheet)
@@ -140,7 +140,7 @@ func printReport(w io.Writer, r *report) error {
 		reportPackages[i] = buildReportPackage(pkg, r)
 		pkgNames[i] = pkg.Name
 	}
-
+	
 	data.Script = string(sc)
 	data.Style = css
 	data.Packages = reportPackages
@@ -148,7 +148,7 @@ func printReport(w io.Writer, r *report) error {
 		strings.Join(pkgNames, " "),
 		strings.Join(os.Args[1:], " "),
 	)
-
+	
 	if len(reportPackages) > 1 {
 		rv := reportPackage{
 			Pkg: &gocov.Package{Name: "Report Total"},
@@ -178,7 +178,7 @@ func HTMLReportCoverage(r io.Reader, opts ReportOptions) error {
 	t0 := time.Now()
 	report := newReport()
 	report.ReportOptions = opts
-
+	
 	// Custom stylesheet?
 	stylesheet := ""
 	if opts.Stylesheet != "" {
@@ -188,17 +188,17 @@ func HTMLReportCoverage(r io.Reader, opts ReportOptions) error {
 		stylesheet = opts.Stylesheet
 	}
 	report.Stylesheet = stylesheet
-
+	
 	data, err := ioutil.ReadAll(r)
 	if err != nil {
 		return eris.Wrap(err, "read coverage data")
 	}
-
+	
 	packages, err := unmarshalJSON(data)
 	if err != nil {
 		return eris.Wrap(err, "unmarshal coverage data")
 	}
-
+	
 	for _, pkg := range packages {
 		report.addPackage(pkg)
 	}
@@ -209,7 +209,7 @@ func HTMLReportCoverage(r io.Reader, opts ReportOptions) error {
 }
 
 // ProjectURL is the project's site on GitHub.
-const ProjectURL = "https://github.com/matm/gocov-html"
+const ProjectURL = "https://github.com/gozelle/gocov-html"
 
 const (
 	hitPrefix  = "    "
@@ -277,7 +277,7 @@ func (f reportFunction) Lines() []functionLine {
 	a := &annotator{}
 	a.fset = token.NewFileSet()
 	a.files = make(map[string]*token.File)
-
+	
 	// Load the file for line information. Probably overkill, maybe
 	// just compute the lines from offsets in here.
 	setContent := false
@@ -290,22 +290,22 @@ func (f reportFunction) Lines() []functionLine {
 		file = a.fset.AddFile(f.File, a.fset.Base(), int(info.Size()))
 		setContent = true
 	}
-
+	
 	data, err := ioutil.ReadFile(f.File)
 	if err != nil {
 		panic(err)
 	}
-
+	
 	if setContent {
 		// This processes the content and records line number info.
 		file.SetLinesForContent(data)
 	}
-
+	
 	statements := f.Statements[:]
 	lineno := file.Line(file.Pos(f.Start))
 	lines := strings.Split(string(data)[f.Start:f.End], "\n")
 	fls := make([]functionLine, len(lines))
-
+	
 	for i, line := range lines {
 		lineno := lineno + i
 		statementFound := false
